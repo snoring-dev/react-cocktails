@@ -8,7 +8,6 @@ const onSuccess = function (response: AxiosResponse) {
   return response.data;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onError = function (error: any) {
   console.error("Request Failed:", error.config);
 
