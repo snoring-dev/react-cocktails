@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../";
+import { Cocktail } from "./types";
 
 // Define a type for the slice state
 interface CocktailState {
-  randomItem: Record<string, object> | null;
+  randomItem: Cocktail | null;
 }
 
 // Define the initial state using that type

@@ -22,11 +22,6 @@ export const getRandomCocktail = async (): Promise<Cocktail | null> => {
       strIngredient3: data.drinks[0].strIngredient3,
       strIngredient4: data.drinks[0].strIngredient4,
       strIngredient5: data.drinks[0].strIngredient5,
-      strMeasure1: data.drinks[0].strMeasure1,
-      strMeasure2: data.drinks[0].strMeasure2,
-      strMeasure3: data.drinks[0].strMeasure3,
-      strMeasure4: data.drinks[0].strMeasure4,
-      strMeasure5: data.drinks[0].strMeasure5,
       dateModified: data.drinks[0].dateModified,
     };
   }
