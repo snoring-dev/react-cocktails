@@ -1,5 +1,5 @@
 import request from "@/lib/http";
-import { Cocktail } from "./types";
+import { Cocktail, ShortDrink } from "./types";
 
 export const getRandomCocktail = async (): Promise<Cocktail | null> => {
   const data = await request({
@@ -27,4 +27,27 @@ export const getRandomCocktail = async (): Promise<Cocktail | null> => {
   }
 
   return null;
+};
+
+export const getDrinksByIngredient = async (
+  ingredients: string[]
+): Promise<ShortDrink[]> => {
+  const requests = ingredients.map((ing) => {
+    return request({
+      method: "get",
+      url: `/filter.php?i=${ing}`,
+    });
+  });
+
+  const data = await Promise.all(requests);
+
+  let allDrinks: Record<string, any>[] = [];
+  data.forEach((e) => (allDrinks = [...allDrinks, ...e.drinks]));
+  const result = [...new Set(allDrinks)];
+
+  return result.map((r) => ({
+    idDrink: r.idDrink,
+    strDrink: r.strDrink,
+    strDrinkThumb: r.strDrinkThumb,
+  }));
 };

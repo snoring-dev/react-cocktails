@@ -2,6 +2,7 @@ import AppIcon from "@/assets/icons8-drink-58.png";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import RandomCocktailPage from "./pages/random-cocktail";
+import FindCocktailPage from "./pages/find-cocktail";
 
 function App() {
   return (
@@ -24,7 +25,9 @@ function App() {
         <TabsContent value="random">
           <RandomCocktailPage />
         </TabsContent>
-        <TabsContent value="find">Look for you preferred cocktail.</TabsContent>
+        <TabsContent value="find">
+          <FindCocktailPage />
+        </TabsContent>
         <TabsContent value="listing">
           Here will be a list of cocktails.
         </TabsContent>

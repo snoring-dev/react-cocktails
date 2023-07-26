@@ -1,3 +1,7 @@
+export type PickOnly<T, K extends keyof T> = Pick<T, K> & {
+  [P in Exclude<keyof T, K>]?: never;
+};
+
 export type Cocktail = {
   idDrink: string;
   strDrink: string;
@@ -14,3 +18,5 @@ export type Cocktail = {
   strIngredient5: string;
   dateModified: string;
 };
+
+export type ShortDrink = PickOnly<Cocktail, "idDrink" & "strDrink" & "strDrinkThumb">;

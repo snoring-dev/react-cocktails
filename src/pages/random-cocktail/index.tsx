@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import CocktailCard from "@/components/ui/cocktail-card";
+import Heading from "@/components/ui/heading";
 import {
-  getRandomCocktail,
+  setRandomCocktail,
   selectRandomCocktail,
-} from "@/store/cocktails/cocktailSlice";
+} from "@/store/cocktails/cocktail-slice";
 import * as CocktailService from "@/store/cocktails/service";
 import { Cocktail } from "@/store/cocktails/types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -14,20 +15,22 @@ function RandomCocktailPage() {
 
   const findRandomCocktail = async () => {
     const cocktail = await CocktailService.getRandomCocktail();
-    dispatch(getRandomCocktail(cocktail));
+    dispatch(setRandomCocktail(cocktail));
   };
 
   return (
     <>
       {randomCocktail && (
         <div className="flex flex-col mb-6 items-center">
-          <CocktailCard data={randomCocktail} showIngredients showInstructions/>
+          <CocktailCard
+            data={randomCocktail}
+            showIngredients
+            showInstructions
+          />
         </div>
       )}
       <div className="flex flex-col items-center justify-center px-10">
-        <div className="font-semibold text-xl text-black mb-2">
-          En panne d'inspiration?
-        </div>
+        <Heading title="En panne d'inspiration?" />
         <Button onClick={findRandomCocktail}>Trouver moi un Cocktail</Button>
       </div>
     </>

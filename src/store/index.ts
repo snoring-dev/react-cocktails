@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import CocktailReducer from './cocktails/cocktailSlice';
+import CocktailReducer from '@/store/cocktails/cocktail-slice';
+import IngredientReducer from '@/store/ingredients/ingredient-slice';
 
 export const store = configureStore({
   reducer: {
     cocktail: CocktailReducer,
+    ingredient: IngredientReducer,
   },
 });
 
