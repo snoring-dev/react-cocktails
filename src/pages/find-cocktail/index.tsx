@@ -12,24 +12,35 @@ import { getAllPossibleIngredients } from "@/store/ingredients/service";
 import { Ingredient } from "@/store/ingredients/types";
 import { getDrinksByIngredient } from "@/store/cocktails/service";
 import {
+  addToSelectedDrinks,
+  removeFromSelectedDrinks,
+  selectChoosenDrinks,
   selectDrinksByIngredient,
   setDrinksByIngredient,
 } from "@/store/cocktails/cocktail-slice";
 import { Button } from "@/components/ui/button";
 import { ShortDrink } from "@/store/cocktails/types";
+import { cn } from "@/lib/utils";
+import DrinkCard from "@/components/ui/drink-card";
 
 interface Props {
   listOfIngredients: Ingredient[];
   drinksByIngredient: ShortDrink[];
+  selectedDrinks: ShortDrink[];
   findIngredients: () => any;
   getDrinksByIngredient: (ingredients: string[]) => any;
+  addDrink: (drink: ShortDrink) => any;
+  removeDrink: (drink: ShortDrink) => any;
 }
 
 function FindCocktailPage({
   listOfIngredients,
   drinksByIngredient,
+  selectedDrinks,
   findIngredients,
   getDrinksByIngredient,
+  addDrink,
+  removeDrink,
 }: Props) {
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
 
@@ -55,6 +66,14 @@ function FindCocktailPage({
 
   const onClickHandler = () => {
     getDrinksByIngredient(selectedIngredients);
+  };
+
+  const toggleDrink = (d: ShortDrink): void => {
+    if (selectedDrinks.includes(d)) {
+      removeDrink(d);
+    } else {
+      addDrink(d);
+    }
   };
 
   return (
@@ -88,23 +107,12 @@ function FindCocktailPage({
       {drinksByIngredient && drinksByIngredient.length > 0 && (
         <div className="grid grid-cols-2 gap-4 my-6">
           {drinksByIngredient.map((drink, index) => (
-            <a
-              key={drink.idDrink + '__' + index}
-              href={`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drink.idDrink}`}
-              target="_blank"
-              className="flex flex-row items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
-            >
-              <img
-                className="object-cover h-16 w-16 rounded-l-lg"
-                src={drink.strDrinkThumb}
-                alt={drink.strDrink}
-              />
-              <div className="flex flex-col justify-between p-4 leading-normal">
-                <h5 className="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white">
-                  {drink.strDrink}
-                </h5>
-              </div>
-            </a>
+            <DrinkCard
+              data={drink}
+              key={drink.idDrink + "__" + index}
+              selected={selectedDrinks.includes(drink)}
+              onClick={() => toggleDrink(drink)}
+            />
           ))}
         </div>
       )}
@@ -115,6 +123,7 @@ function FindCocktailPage({
 const mapStateToProps = (state: RootState) => ({
   listOfIngredients: selectedListOfIngredient(state),
   drinksByIngredient: selectDrinksByIngredient(state),
+  selectedDrinks: selectChoosenDrinks(state),
 });
 
 const mapActionsToProps = {
@@ -127,6 +136,12 @@ const mapActionsToProps = {
       const drinks = await getDrinksByIngredient(ingredients);
       dispatch(setDrinksByIngredient(drinks));
     },
+  addDrink: (drink: ShortDrink) => (dispatch: AppDispatch) => {
+    dispatch(addToSelectedDrinks(drink));
+  },
+  removeDrink: (drink: ShortDrink) => (dispatch: AppDispatch) => {
+    dispatch(removeFromSelectedDrinks(drink));
+  },
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(FindCocktailPage);
