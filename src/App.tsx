@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import RandomCocktailPage from "./pages/random-cocktail";
 import FindCocktailPage from "./pages/find-cocktail";
+import CocktailsListPage from "./pages/cocktails-list";
 
 function App() {
   return (
@@ -29,7 +30,7 @@ function App() {
           <FindCocktailPage />
         </TabsContent>
         <TabsContent value="listing">
-          Here will be a list of cocktails.
+          <CocktailsListPage />
         </TabsContent>
       </Tabs>
     </div>

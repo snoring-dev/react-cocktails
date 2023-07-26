@@ -1,20 +1,28 @@
 import { cn } from "@/lib/utils";
 import { ShortDrink } from "@/store/cocktails/types";
+import { Trash2 } from "lucide-react";
+import { Button } from "./button";
 
 interface Props {
   data: ShortDrink;
-  onClick: () => void;
+  onClick?: () => void;
+  onDelete?: () => void;
   selected?: boolean;
 }
 
-function DrinkCard({ data, onClick, selected = false }: Props) {
+function DrinkCard({
+  data,
+  onClick = () => {},
+  selected = false,
+  onDelete,
+}: Props) {
   return (
     <a
       href="#"
       onClick={onClick}
       className={cn(
-        "flex flex-row items-center bg-white border-2 rounded-lg shadow hover:bg-gray-100 transition-all duration-300",
-        selected ? "border-black" : "border-gray-100/0"
+        "relative flex flex-row items-center bg-white border-2 rounded-lg hover:bg-gray-100 transition-all duration-300",
+        selected ? "border-black" : "border-gray-100"
       )}
     >
       <img
@@ -27,6 +35,14 @@ function DrinkCard({ data, onClick, selected = false }: Props) {
           {data.strDrink}
         </h5>
       </div>
+
+      {onDelete && (
+        <div className="absolute right-2">
+          <Button size="icon" variant="destructive" onClick={onDelete}>
+            <Trash2 className="w-4 h-4" />
+          </Button>
+        </div>
+      )}
     </a>
   );
 }

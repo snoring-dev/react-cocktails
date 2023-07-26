@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Heading from "@/components/ui/heading";
 import { AppDispatch, RootState } from "@/store";
 import {
-  selectedListOfIngredient,
+  selectListOfIngredient,
   setListOfIngredients,
 } from "@/store/ingredients/ingredient-slice";
 import { getAllPossibleIngredients } from "@/store/ingredients/service";
@@ -20,7 +20,6 @@ import {
 } from "@/store/cocktails/cocktail-slice";
 import { Button } from "@/components/ui/button";
 import { ShortDrink } from "@/store/cocktails/types";
-import { cn } from "@/lib/utils";
 import DrinkCard from "@/components/ui/drink-card";
 
 interface Props {
@@ -121,7 +120,7 @@ function FindCocktailPage({
 }
 
 const mapStateToProps = (state: RootState) => ({
-  listOfIngredients: selectedListOfIngredient(state),
+  listOfIngredients: selectListOfIngredient(state),
   drinksByIngredient: selectDrinksByIngredient(state),
   selectedDrinks: selectChoosenDrinks(state),
 });
