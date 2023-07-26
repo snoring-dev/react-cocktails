@@ -43,6 +43,14 @@ export const getAllIngredientsForList = async (
   const data = await Promise.all(requests);
   const cocktails = flattenDrinks(data);
   const allIngredients = cocktails.map((c) => getIngredients(c));
+  const ingSet = new Set([...allIngredients.flat()]);
+  const result: Ingredient[] = [];
 
-  return [...allIngredients.flat().map((i) => ({ label: i }))];
+  ingSet.forEach((v) => {
+    if (v) {
+      result.push({ label: v })
+    }
+  });
+
+  return result;
 };

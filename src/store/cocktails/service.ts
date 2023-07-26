@@ -1,5 +1,6 @@
 import request from "@/lib/http";
 import { Cocktail, ShortDrink } from "./types";
+import { flattenDrinks } from "@/lib/utils";
 
 export const getRandomCocktail = async (): Promise<Cocktail | null> => {
   const data = await request({
@@ -40,10 +41,7 @@ export const getDrinksByIngredient = async (
   });
 
   const data = await Promise.all(requests);
-
-  let allDrinks: Record<string, any>[] = [];
-  data.forEach((e) => (allDrinks = [...allDrinks, ...e.drinks]));
-  const result = [...new Set(allDrinks)];
+  const result = flattenDrinks(data);
 
   return result.map((r) => ({
     idDrink: r.idDrink,
